@@ -1,0 +1,121 @@
+<router-outlet></router-outlet>
+
+<!-- $ npm install jquery --save
+$ npm install slick-carousel --save
+$ npm install ngx-slick-carousel --save -->
+
+<div class="container-fluid">
+  <div class="fix">
+    <ng-container *ngIf="showCarousel">
+      <div class="row">
+        <div class="col-md-4">
+          <div id="show" class="content" (mouseover)="changeText = true">
+            <!-- (mouseout)="changeText = false" -->
+            <ngx-slick-carousel
+              class="carousel"
+              #slickModal="slick-carousel"
+              [config]="slideConfig"
+              (init)="slickInit($event)"
+              (breakpoint)="breakpoint($event)"
+              (afterChange)="afterChange($event)"
+              (beforeChange)="beforeChange($event)"
+            >
+              <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src="{{ slide.img }}" alt="" class="img-yo" />
+                  </div>
+                  <div class="col-md-10">
+                    <p class="name-p">
+                      {{ slide.name }}
+                    </p>
+                    <p
+                      class="desc-p"
+                      (mouseover)="getValue('true')"
+                      (mouseout)="getValue('false')"
+                    >
+                      {{
+                        showMore
+                          ? slide.description
+                          : (slide.description | slice : 0 : 30)
+                      }}
+                      <span *ngIf="!showMore">...</span>
+                    </p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p class="date-p">2020-06-07</p>
+                      </div>
+                      <div class="col-md-6">
+                        <p class="powerd-p">Powered by goodreviews</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ngx-slick-carousel>
+          </div>
+
+          <div class="see-more" *ngIf="changeText">
+            <div class="row">
+              <div class="col-md-10 see" (click)="seeMoreReview()">
+                See More Reviews
+              </div>
+              <div class="col-md-2 cross">
+                <i class="fa fa-close" (click)="dontShow()"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="notCarousel">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <i class="fa fa-close cross" (click)="topCross()"></i>
+            </div>
+          </div>
+          <div class="yoo">
+            <div class="row content" *ngFor="let slide of slides">
+              <!-- ------------------ -->
+              <div class="col-md-2">
+                <img src="{{ slide.img }}" alt="" class="img-yo" />
+              </div>
+              <div class="col-md-10">
+                <p class="name-p">
+                  {{ slide.name }}
+                </p>
+                <p
+                  class="desc-p"
+                  (mouseover)="getValue('true')"
+                  (mouseout)="getValue('false')"
+                >
+                  {{
+                    showMore
+                      ? slide.description
+                      : (slide.description | slice : 0 : 30)
+                  }}
+                  <span *ngIf="!showMore">...</span>
+                </p>
+                <div class="row">
+                  <div class="col-md-4">
+                    <p class="date-p">2020-06-07</p>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="powerd-p">Powered by goodreviews</p>
+                  </div>
+                </div>
+              </div>
+              <!-- ------------------ -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8"></div>
+      </div>
+    </ng-container>
+  </div>
+</div>
